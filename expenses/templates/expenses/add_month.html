@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Month</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body class="p-6 bg-gray-100">
+    <h1 class="text-2xl font-bold mb-4">Add Month</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add</button>
+    </form>
+    <a href="{% url 'index' %}" class="text-blue-500 mt-4 inline-block">Back to Expense Tracker</a>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.3.0/dist/alpine.min.js" defer></script>
+</body>
+</html>
