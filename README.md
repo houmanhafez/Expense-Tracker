@@ -15,29 +15,31 @@ Expense Tracker is a web application built with Django and Tailwind CSS. It allo
 ### Installation
 
 1. **Clone the repository:**
-   ``
+   ```
    git clone <repository-url>
-   cd expense-tracker``
+   cd expense-tracker
+   ```
 2. **Create and activate a virtual environment:**
 
-``python -m venv venv
+```
+python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-``
+```
 3. **Install dependencies:**
-``
+```
 pip install -r requirements.txt
 npm install
-``
+```
 
 4. **Set up Tailwind CSS:**
-``
+```
 python manage.py tailwind init
 Update Tailwind configuration:
-``
+```
 
 - In tailwind.config.js, add paths to your Django templates:
 
-``
+```
 module.exports = {
   content: [
     './templates/**/*.html',
@@ -48,22 +50,22 @@ module.exports = {
   },
   plugins: [],
 }
-``
+```
 
 - Make and apply migrations:
-``
+```
 python manage.py makemigrations
 python manage.py migrate
-``
+```
 
 - Create a superuser:
-``
+```
 python manage.py createsuperuser
-``
+```
 - Run the development server:
-``
+```
 python manage.py runserver
-``
+```
 ## Usage
 
 - Access the application: Open your browser and go to http://127.0.0.1:8000/.
