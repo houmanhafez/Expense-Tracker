@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('expenses', '0001_initial'),
+        ("expenses", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='expense',
-            name='currency',
-            field=models.CharField(default='USD', max_length=3),
+            model_name="expense",
+            name="currency",
+            field=models.CharField(default="USD", max_length=3),
         ),
     ]
