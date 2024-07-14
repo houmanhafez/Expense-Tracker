@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.dateparse import parse_date
 from django.db.models import Q
 from django.http import JsonResponse
 from .models import Expense, Month
@@ -9,28 +8,30 @@ import json
 
 
 def index(request):
-    expenses = Expense.objects.all().order_by('-date')
-    
+    expenses = Expense.objects.all().order_by("-date")
+
     expenses_by_category = defaultdict(float)
     expenses_by_month = defaultdict(float)
 
     for expense in expenses:
         expenses_by_category[expense.category] += float(expense.amount)
-        expenses_by_month[expense.date.strftime('%B %Y')] += float(expense.amount)
+        expenses_by_month[expense.date.strftime("%B %Y")] += float(expense.amount)
 
     grouped_expenses = {}
     for expense in expenses:
-        month_name = expense.date.strftime('%B %Y')
+        month_name = expense.date.strftime("%B %Y")
+
         if month_name not in grouped_expenses:
             grouped_expenses[month_name] = []
         grouped_expenses[month_name].append(expense)
 
     context = {
-        'grouped_expenses': grouped_expenses,
-        'expenses_by_category': json.dumps(expenses_by_category),
-        'expenses_by_month': json.dumps(expenses_by_month)
+        "grouped_expenses": grouped_expenses,
+        "expenses_by_category": json.dumps(expenses_by_category),
+        "expenses_by_month": json.dumps(expenses_by_month),
     }
-    return render(request, 'expenses/index.html', context)
+    return render(request, "expenses/index.html", context)
+
 
 
 def add_expense(request):
@@ -46,9 +47,7 @@ def add_expense(request):
             return redirect("index")
     else:
         form = ExpenseForm()
-
     return render(request, "expenses/add_expense.html", {"form": form})
-
 
 
 def edit_expense(request, expense_id):
@@ -77,11 +76,20 @@ def expense_data(request):
 
 
 def search_expenses(request):
-    query = request.GET.get('query')
-    results = Expense.objects.filter(
-        Q(category__icontains=query) | 
-        Q(currency__icontains=query) |
-        Q(amount__icontains=query)
-    )
-    return render(request, 'expenses/search_results.html', {'results': results})
+    query = request.GET.get("query", "")
+
+    if query:
+        results = Expense.objects.filter(
+            Q(category__icontains=query)
+            | Q(currency__icontains=query)
+            | Q(amount__icontains=query)
+        )
+    else:
+        results = Expense.objects.none()
+
+    context = {
+        "results": results,
+        "query": query,
+    }
+    return render(request, "expenses/search_results.html", context)
 
