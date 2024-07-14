@@ -1,33 +1,36 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
 </head>
+
 <body class="p-6 bg-gray-100">
     <h1 class="text-2xl font-bold mb-4">Expense Tracker</h1>
     <div>
-        <a href="{% url 'add_expense' %}"  class="bg-blue-500 text-white p-2 rounded">Add Expense</a>
-        <a href="{% url 'add_month' %}"  class="bg-blue-500 text-white p-2 rounded">Add Month</a>
+        <a href="{% url 'add_expense' %}" class="bg-blue-500 text-white p-2 rounded">Add Expense</a>
+        <a href="{% url 'add_month' %}" class="bg-blue-500 text-white p-2 rounded">Add Month</a>
     </div>
     <div class="mt-6">
         {% for month, total in total_expenses.items %}
-            <div class="bg-white p-4 rounded shadow mb-4">
-                <h2 class="text-xl font-semibold">{{ month.name }}</h2>
-                <p>Total Expenses: ${{ total }}</p>
-                <ul>
-                    {% for expense in month.expenses.all %}
-                        <li>
-                            {{ expense.date }} - {{ expense.category }} - ${{ expense.amount }}
-                            <a href="{% url 'edit_expense' expense.pk %}" class="text-blue-500 ml-4">Edit</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+        <div class="bg-white p-4 rounded shadow mb-4">
+            <h2 class="text-xl font-semibold">{{ month.name }}</h2>
+            <p>Total Expenses: ${{ total }}</p>
+            <ul>
+                {% for expense in month.expenses.all %}
+                <li>
+                    {{ expense.date }} - {{ expense.category }} - ${{ expense.amount }}
+                    <a href="{% url 'edit_expense' expense.pk %}" class="text-blue-500 ml-4">Edit</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         {% endfor %}
     </div>
 </body>
+
 </html>
