@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.dateparse import parse_date
 from django.db.models import Q
 from django.http import JsonResponse
 from .models import Expense, Month
+from .forms import ExpenseForm
 from collections import defaultdict
 import json
-from .forms import ExpenseForm
-from django.utils.dateparse import parse_date
 
 
 def index(request):
@@ -32,6 +32,7 @@ def index(request):
     }
     return render(request, 'expenses/index.html', context)
 
+
 def add_expense(request):
     if request.method == "POST":
         form = ExpenseForm(request.POST)
@@ -49,10 +50,11 @@ def add_expense(request):
     return render(request, "expenses/add_expense.html", {"form": form})
 
 
+
 def edit_expense(request, expense_id):
     expense = get_object_or_404(Expense, id=expense_id)
-
     if request.method == "POST":
+
         form = ExpenseForm(request.POST, instance=expense)
         if form.is_valid():
             form.save()
@@ -82,3 +84,4 @@ def search_expenses(request):
         Q(amount__icontains=query)
     )
     return render(request, 'expenses/search_results.html', {'results': results})
+

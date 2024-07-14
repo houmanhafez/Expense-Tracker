@@ -9,5 +9,5 @@ class ExpenseForm(forms.ModelForm):
             'currency': forms.TextInput(attrs={'placeholder': 'e.g., USD, EUR'}),
         }
         initial = {
-            'currency': 'USD',  # Default value
+            'currency': 'EUR',
         }
