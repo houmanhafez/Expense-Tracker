@@ -1,47 +1,66 @@
 <!-- expenses/templates/expenses/search_results.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search Results</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
-</head>
-<body class="bg-gray-100">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+    />
+  </head>
+  <body class="bg-gray-100">
     <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-4">Search Results</h1>
-        
-        <form method="GET" action="{% url 'search_expenses' %}" class="mb-4">
-            <input type="text" name="q" placeholder="Search expenses..." class="border p-2 rounded w-full" value="{{ request.GET.q }}">
-            <button type="submit" class="bg-blue-500 text-white p-2 rounded mt-2">Search</button>
-        </form>
+      <h1 class="text-3xl font-bold mb-4">Search Results</h1>
 
-        {% if results %}
-            <ul class="space-y-4">
-                {% for expense in results %}
-                    <li class="bg-white shadow rounded-lg p-4">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <p class="text-lg font-bold">{{ expense.date }}</p>
-                                <p class="text-sm">{{ expense.category }}</p>
-                                <p class="text-sm">{{ expense.description }}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-lg font-bold">{{ expense.amount }}</p>
-                                <p class="text-sm">{{ expense.currency }}</p>
-                                <a href="{% url 'edit_expense' expense.pk %}" class="text-blue-500">Edit</a>
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-gray-500">No expenses found matching your search criteria.</p>
-        {% endif %}
-        
-        <div class="mt-4">
-            <a href="{% url 'index' %}" class="text-blue-500">Back to Expense Tracker</a>
-        </div>
+      <form method="GET" action="{% url 'search_expenses' %}" class="mb-4">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search expenses..."
+          class="border p-2 rounded w-full"
+          value="{{ request.GET.q }}"
+        />
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded mt-2">
+          Search
+        </button>
+      </form>
+
+      {% if results %}
+      <ul class="space-y-4">
+        {% for expense in results %}
+        <li class="bg-white shadow rounded-lg p-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-lg font-bold">{{ expense.date }}</p>
+              <p class="text-sm">{{ expense.category }}</p>
+              <p class="text-sm">{{ expense.description }}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold">{{ expense.amount }}</p>
+              <p class="text-sm">{{ expense.currency }}</p>
+              <a
+                href="{% url 'edit_expense' expense.pk %}"
+                class="text-blue-500"
+                >Edit</a
+              >
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="text-gray-500">
+        No expenses found matching your search criteria.
+      </p>
+      {% endif %}
+
+      <div class="mt-4">
+        <a href="{% url 'index' %}" class="text-blue-500"
+          >Back to Expense Tracker</a
+        >
+      </div>
     </div>
-</body>
+  </body>
 </html>
