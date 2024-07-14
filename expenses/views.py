@@ -7,10 +7,20 @@ from django.utils.dateparse import parse_date
 
 def index(request):
     months = Month.objects.all()
+    total_expenses = {
+        month: sum(expense.amount for expense in month.expenses.all())
+        for month in months
+    }
+    return render(
+        request,
+        "expenses/index.html",
+        {"months": months, "total_expenses": total_expenses},
+    )
+
     return render(request, 'expenses/index.html', {'months': months})
 
 def add_expense(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ExpenseForm(request.POST)
         if form.is_valid():
             expense = form.save(commit=False)
@@ -22,18 +32,22 @@ def add_expense(request):
             return redirect('index')
     else:
         form = ExpenseForm()
+    return render(request, "expenses/add_expense.html", {"form": form})
+
+
     
     return render(request, 'expenses/add_expense.html', {'form': form})
     return render(request, 'expenses/add_expense.html', {'form': form})
 def add_month(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = MonthForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect("index")
     else:
         form = MonthForm()
-    return render(request, 'expenses/add_month.html', {'form': form})
+    return render(request, "expenses/add_month.html", {"form": form})
+
 
 def edit_expense(request, expense_id):
     expense = get_object_or_404(Expense, id=expense_id)
@@ -42,7 +56,7 @@ def edit_expense(request, expense_id):
         form = ExpenseForm(request.POST, instance=expense)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect("index")
     else:
         form = ExpenseForm(instance=expense)
     

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Month(models.Model):
     name = models.CharField(max_length=50)
 
@@ -9,6 +10,7 @@ class Month(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Expense(models.Model):
     date = models.DateField()
