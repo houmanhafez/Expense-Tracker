@@ -2,19 +2,13 @@
 
 ## Description
 
-Expense Tracker is a web application built with Django and Tailwind CSS. It allows users to track their expenses, categorize them by month, and perform CRUD operations on expenses.
-
-## Requirements
-
-- Django
-- django-browser-reload (optional, for development)
-- Tailwind CSS
+Expense Tracker is a web application built with Django and Tailwind CSS. It allows users to track their expenses, categorize them by month, and perform CRUD operations on expenses, add categories etc.
 
 ## Project Setup
 
 ### Prerequisites
 
-- Python 3.x
+- Python 3.10 or later
 - pip
 - npm (Node Package Manager)
 
@@ -76,16 +70,10 @@ Expense Tracker is a web application built with Django and Tailwind CSS. It allo
 - Access the application: Open your browser and go to http://127.0.0.1:8000/.
 - Admin Interface: Access the admin interface at http://127.0.0.1:8000/admin/ using the superuser credentials.
 
-## Features
-
-- Add, view, and edit expenses.
-- Categorize expenses by month.
-- View total expenses for each month.
-
 ## File Structure
 
 - expenses/: Contains the Django app for managing expenses.
-- templates/: Contains the HTML templates.
+- expenses/templates/: Contains the HTML templates.
 - static/: Contains static files including Tailwind CSS.
 - tailwind.config.js: Tailwind CSS configuration file.
 
