@@ -20,6 +20,7 @@ def index(request):
     grouped_expenses = {}
     for expense in expenses:
         month_name = expense.date.strftime("%B %Y")
+
         if month_name not in grouped_expenses:
             grouped_expenses[month_name] = []
         grouped_expenses[month_name].append(expense)
@@ -30,6 +31,7 @@ def index(request):
         "expenses_by_month": json.dumps(expenses_by_month),
     }
     return render(request, "expenses/index.html", context)
+
 
 
 def add_expense(request):
@@ -45,7 +47,6 @@ def add_expense(request):
             return redirect("index")
     else:
         form = ExpenseForm()
-
     return render(request, "expenses/add_expense.html", {"form": form})
 
 
@@ -91,3 +92,4 @@ def search_expenses(request):
         "query": query,
     }
     return render(request, "expenses/search_results.html", context)
+
