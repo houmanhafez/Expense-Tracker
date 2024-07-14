@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",  
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "npx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --watch"
   },
   "keywords": [],
@@ -14,5 +14,8 @@
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.3"
   }
 }
