@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expense Tracker</title>
@@ -12,17 +13,28 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-gray-100 dark:bg-gray-900">
     <div class="container mx-auto p-4">
       <div class="flex justify-between items-center mb-4">
-        <h1 class="text-3xl font-bold">Expense Tracker</h1>
-        <a
-          href="{% url 'add_expense' %}"
-          class="bg-blue-500 text-white p-2 rounded"
-          >Add Expense</a
-        >
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          Expense Tracker
+        </h1>
+        <div>
+          <a
+            href="{% url 'add_expense' %}"
+            class="bg-blue-500 text-white p-2 rounded"
+            >Add Expense</a
+          >
+          <button
+            id="theme-toggle"
+            class="ml-4 p-2 rounded text-gray-500 dark:text-gray-400"
+          >
+            <i id="theme-toggle-icon" class="fas fa-moon"></i>
+          </button>
+        </div>
       </div>
 
       <div class="mb-4">
@@ -39,41 +51,47 @@
               type="text"
               name="query"
               placeholder="Search expenses..."
-              class="w-full pl-10 p-2 border border-gray-300 rounded"
+              class="w-full pl-10 p-2 border border-gray-300 rounded dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100"
             />
           </div>
         </form>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div class="bg-white shadow rounded-lg p-4">
-          <h2 class="text-2xl font-bold mb-4">Expenses by Category</h2>
+        <div class="bg-white shadow rounded-lg p-4 dark:bg-gray-800">
+          <h2 class="text-2xl font-bold mb-4 dark:text-gray-100">
+            Expenses by Category
+          </h2>
           <canvas id="expensesByCategoryChart"></canvas>
         </div>
-        <div class="bg-white shadow rounded-lg p-4">
-          <h2 class="text-2xl font-bold mb-4">Expenses by Month</h2>
+        <div class="bg-white shadow rounded-lg p-4 dark:bg-gray-800">
+          <h2 class="text-2xl font-bold mb-4 dark:text-gray-100">
+            Expenses by Month
+          </h2>
           <canvas id="expensesByMonthChart"></canvas>
         </div>
       </div>
 
       <div>
         {% for month, expenses in grouped_expenses.items %}
-        <h2 class="text-2xl font-bold mb-2">{{ month }}</h2>
+        <h2 class="text-2xl font-bold mb-2 dark:text-gray-100">{{ month }}</h2>
         <ul class="space-y-4 mb-6">
           {% for expense in expenses %}
-          <li class="bg-white shadow rounded-lg p-4">
+          <li class="bg-white shadow rounded-lg p-4 dark:bg-gray-800">
             <div class="flex justify-between items-center">
               <div>
-                <p class="text-lg font-bold">{{ expense.date }}</p>
-                <p class="text-sm">{{ expense.category }}</p>
+                <p class="text-lg font-bold dark:text-gray-100">
+                  {{ expense.date }}
+                </p>
+                <p class="text-sm dark:text-gray-400">{{ expense.category }}</p>
               </div>
               <div class="text-right">
-                <p class="text-lg font-bold">
+                <p class="text-lg font-bold dark:text-gray-100">
                   {{ expense.amount }} {{ expense.currency|default:"EUR" }}
                 </p>
                 <a
                   href="{% url 'edit_expense' expense.pk %}"
-                  class="text-blue-500"
+                  class="text-blue-500 dark:text-blue-300"
                   >Edit</a
                 >
               </div>
@@ -131,8 +149,44 @@
                   borderWidth: 1
               }]
           }
+      });
 
+      // Dark mode toggle
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeToggleIcon = document.getElementById('theme-toggle-icon');
+      const currentTheme = localStorage.getItem('theme') || 'light';
+
+      if (currentTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          themeToggleIcon.classList.remove('fa-moon');
+          themeToggleIcon.classList.add('fa-sun');
+      } else {
+          document.documentElement.classList.remove('dark');
+          themeToggleIcon.classList.remove('fa-sun');
+          themeToggleIcon.classList.add('fa-moon');
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+          document.documentElement.classList.toggle('dark');
+          if (document.documentElement.classList.contains('dark')) {
+              localStorage.setItem('theme', 'dark');
+              themeToggleIcon.classList.remove('fa-moon');
+              themeToggleIcon.classList.add('fa-sun');
+          } else {
+              localStorage.setItem('theme', 'light');
+              themeToggleIcon.classList.remove('fa-sun');
+              themeToggleIcon.classList.add('fa-moon');
+          }
       });
     </script>
+
+    <footer class="p-4 dark:bg-gray-800 dark:text-gray-100">
+      <h6>© Copyright 2024</h6>
+      <ul class="fa_icons">
+        <a href=""><i class="fa-brands fa-instagram"></i></a>
+        <a href=""><i class="fa-brands fa-github"></i></a>
+        <a href=""><i class="fa-brands fa-steam"></i></a>
+      </ul>
+    </footer>
   </body>
 </html>
