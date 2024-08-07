@@ -9,55 +9,41 @@ Expense Tracker is a web application built with Django and Tailwind CSS. It allo
 ### Prerequisites
 
 - Python 3.10 or later
-- pip
-- npm (Node Package Manager)
+- pip 22 or later
+- npm 8 or later
 
 ### Installation
 
-1. **Clone the repository and cd into expense_tracker folder:**
-   ```
-   cd expense-tracker
-   ```
-2. **Create and activate a virtual environment:**
+1. **Create and activate a virtual environment:**
 
    ```
    python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
    ```
-3. **Install dependencies:**
+   On MacOs/Linux:
+   ```
+   source venv/bin/activate
+   ```
+   On Windows:
+   ```
+   venv\Scripts\activate
+   ```
+3. **Install dependencies to the virtual environment:**
    ```
    pip install -r requirements.txt
    npm install
    ```
-
-4. **Set up Tailwind CSS:**
-   ```
-   python manage.py tailwind init
-   Update Tailwind configuration:
-   ```
-
-- In tailwind.config.js, add paths to your Django templates:
-
-   ```
-   module.exports = {
-     content: [
-       './templates/**/*.html',
-       './expenses/templates/**/*.html',
-     ],
-     theme: {
-       extend: {},
-     },
-     plugins: [],
-   }
-   ```
-
 - Make and apply migrations:
    ```
    python manage.py makemigrations
    python manage.py migrate
    ```
-
-- Create a superuser:
+- Make and apply the expenses migrations:
+  ```
+   python manage.py makemigrations expenses
+   python manage.py migrate expenses  
+  ```
+- Create a superuser for the admin interface(optional):
    ```
    python manage.py createsuperuser
    ```
@@ -67,15 +53,8 @@ Expense Tracker is a web application built with Django and Tailwind CSS. It allo
    ```
 ## Usage
 
-- Access the application: Open your browser and go to http://127.0.0.1:8000/.
-- Admin Interface: Access the admin interface at http://127.0.0.1:8000/admin/ using the superuser credentials.
-
-## File Structure
-
-- expenses/: Contains the Django app for managing expenses.
-- expenses/templates/: Contains the HTML templates.
-- static/: Contains static files including Tailwind CSS.
-- tailwind.config.js: Tailwind CSS configuration file.
+- Open your browser and go to http://127.0.0.1:8000/
+- Access the admin interface at http://127.0.0.1:8000/admin/ using the superuser email and password.
 
 ## License
 This project is licensed under the MIT License.
